@@ -11,6 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import networking.LedStrip
+import networking.LedStrip.Companion.all_power
+import networking.VollyController
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -25,23 +28,9 @@ class FirstFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            val request = JsonObjectRequest(Request.Method.GET, VollyController.getUrl() + "on", null, null, Response.ErrorListener { error -> error.printStackTrace() })
-            VollyController.get().add(request)
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
-    }
     fun switch_click_handle(view: View) {
-        if ((view as Switch).isChecked) {
-            val request = JsonObjectRequest(Request.Method.GET, VollyController.getUrl() + "on", null, null, Response.ErrorListener { error -> error.printStackTrace() })
-            VollyController.get().add(request)
-        } else {
-            val request = JsonObjectRequest(Request.Method.GET, VollyController.getUrl() + "off", null, null, Response.ErrorListener { error -> error.printStackTrace() })
-            VollyController.get().add(request)
-        }
+        view as Switch
+        LedStrip.all_power(view.isChecked)
     }
 
 }

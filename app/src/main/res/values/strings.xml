@@ -11,7 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string-array name="lights">
-        <item>Jacob Desk</item>
-        <item>Ben Desk</item>
+        <item>Jacob</item>
+        <item>Ben</item>
     </string-array>
 </resources>

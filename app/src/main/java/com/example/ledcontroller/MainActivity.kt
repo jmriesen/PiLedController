@@ -1,8 +1,6 @@
 package com.example.ledcontroller
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -11,15 +9,13 @@ import android.widget.Switch
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
-import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import org.json.JSONException
+import networking.LedStrip
+import networking.LedStripManager
+import networking.VollyController
 
 class MainActivity : AppCompatActivity() {
-    lateinit var lights : Array<String>
     lateinit var recyclerView : RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +23,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         VollyController.init(this)
+        LedStripManager.init(resources);
 
-        lights = resources.getStringArray(R.array.lights)
         recyclerView = findViewById(R.id.recyclerView)
 
-        val myAdapter = MyAdapter(this,lights)
+        val myAdapter = MyAdapter(this,LedStripManager.lights)
         recyclerView.adapter = myAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
@@ -54,12 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun switch_click_handle(view: View) {
-        if ((view as Switch).isChecked) {
-            val request = JsonObjectRequest(Request.Method.GET, VollyController.getUrl() + "on", null, null, Response.ErrorListener { error -> error.printStackTrace() })
-            VollyController.get().add(request)
-        } else {
-            val request = JsonObjectRequest(Request.Method.GET, VollyController.getUrl() + "off", null, null, Response.ErrorListener { error -> error.printStackTrace() })
-            VollyController.get().add(request)
-        }
+        view as Switch
+        LedStrip.all_power(view.isChecked)
     }
 }

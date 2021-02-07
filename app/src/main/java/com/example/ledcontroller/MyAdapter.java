@@ -4,24 +4,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import java.util.ArrayList;
+
+import networking.LedStrip;
+import networking.VollyController;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     Context context;
-    String[] lights;
-    public MyAdapter(Context context, String[] lights){
+    ArrayList<LedStrip> lights;
+    public MyAdapter(Context context, ArrayList<LedStrip> lights){
         this.context = context;
         this.lights = lights;
     }
@@ -35,17 +33,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.led_name = lights[position];
+        holder.led_strip = lights.get(position);
         holder.update();
     }
 
     @Override
     public int getItemCount() {
-        return lights.length;
+        return lights.size();
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        String led_name = "";
+        LedStrip led_strip;
         TextView name;
         Switch aSwitch;
 
@@ -53,12 +51,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             super(itemView);
             name = itemView.findViewById(R.id.name);
             aSwitch = itemView.findViewById(R.id.led_power);
-            aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                VollyController.power(led_name,isChecked);
-            });
+            aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> led_strip.power(isChecked));
         }
         public void update(){
-            name.setText(led_name);
+            name.setText(led_strip.getName());
         }
     }
 }

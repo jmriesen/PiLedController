@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import networking.VollyController
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -28,8 +29,6 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
-            val request = JsonObjectRequest(Request.Method.GET, VollyController.getUrl()+"off", null, null, Response.ErrorListener { error -> error.printStackTrace() })
-            VollyController.get().add(request)
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
     }
