@@ -36,8 +36,7 @@
         android:text="Switch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_first"
-        android:onClick="switch_click_handle"
-        android:OnCheckedChange="switch_click_handle">
+        android:onClick="switch_click_handle">
     </Switch>
 
 
