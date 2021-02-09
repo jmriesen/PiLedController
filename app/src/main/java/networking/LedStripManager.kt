@@ -17,7 +17,9 @@ class LedStripManager {
         fun init(resources: Resources){
             VollyController.get().add(
                     JsonArrayRequest(Request.Method.GET, VollyController.getUrl() +"lights", null, Response.Listener
-                    { response -> for( i in 0 until response.length()) {
+                    { response ->
+                        lights.clear()
+                        for( i in 0 until response.length()) {
                         lights.add(
                                 LedStrip(
                                         response[i].toString()

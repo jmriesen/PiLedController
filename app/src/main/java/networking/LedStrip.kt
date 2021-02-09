@@ -16,6 +16,11 @@ class LedStrip(name: String) {
         VollyController.get().add(
                 JsonObjectRequest(Request.Method.GET, VollyController.getUrl() + power + "/" + name, null, null, { obj: VolleyError -> obj.printStackTrace() }))
     }
+    fun set(color : Int){
+        VollyController.get().add(
+            JsonObjectRequest(Request.Method.GET, VollyController.getUrl() + "set/" + name +"/"+color.toUInt(), null, null, { obj: VolleyError -> obj.printStackTrace() }))
+    }
+
     fun getName(): String {
         return name
     }

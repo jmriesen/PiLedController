@@ -4,13 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Switch
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import networking.LedStrip
 import networking.LedStripManager
 import networking.VollyController
@@ -27,15 +23,17 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
 
-        val myAdapter = MyAdapter(this,LedStripManager.lights)
+        val myAdapter = LightsListView(this, LedStripManager.lights)
         recyclerView.adapter = myAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        findViewById<Button>(R.id.all_on).setOnClickListener { v -> LedStrip.all_power(true) }
+        findViewById<Button>(R.id.all_off).setOnClickListener { v -> LedStrip.all_power(false) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
-
         return true
     }
 
@@ -47,10 +45,5 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    fun switch_click_handle(view: View) {
-        view as Switch
-        LedStrip.all_power(view.isChecked)
     }
 }
