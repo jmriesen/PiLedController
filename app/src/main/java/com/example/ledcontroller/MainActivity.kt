@@ -7,8 +7,7 @@ import android.view.MenuItem
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import networking.LedStrip
-import networking.LedStripManager
+import networking.LedGroupManager
 import networking.VollyController
 
 class MainActivity : AppCompatActivity() {
@@ -17,18 +16,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
-
         VollyController.init(this)
-        LedStripManager.init(resources);
-
         recyclerView = findViewById(R.id.recyclerView)
 
-        val myAdapter = LightsListView(this, LedStripManager.lights)
+        val myAdapter = LightsListView(this, LedGroupManager.lights)
         recyclerView.adapter = myAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        findViewById<Button>(R.id.all_on).setOnClickListener { v -> LedStrip.all_power(true) }
-        findViewById<Button>(R.id.all_off).setOnClickListener { v -> LedStrip.all_power(false) }
+
+
+        LedGroupManager.init { myAdapter.notifyDataSetChanged(); }
+
+        findViewById<Button>(R.id.update).setOnClickListener { _-> LedGroupManager.init { myAdapter.notifyDataSetChanged(); } }
+        findViewById<Button>(R.id.all_off).setOnClickListener { _ -> LedGroupManager.kill_all { myAdapter.notifyDataSetChanged(); } }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

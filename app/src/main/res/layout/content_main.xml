@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <Button
@@ -12,16 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="All Off"
-        app:layout_constraintBottom_toTopOf="@+id/all_on"
-        app:layout_constraintEnd_toEndOf="@+id/all_on"
-        app:layout_constraintStart_toStartOf="@+id/all_on" />
+        app:layout_constraintBottom_toTopOf="@+id/update"
+        app:layout_constraintEnd_toEndOf="@+id/update"
+        app:layout_constraintStart_toStartOf="@+id/update" />
 
     <Button
-        android:id="@+id/all_on"
+        android:id="@+id/update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="All On"
+        android:text="Update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
