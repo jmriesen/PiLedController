@@ -33,11 +33,7 @@ class LedGroup(private val name: String, private var color: Pattern, private var
     }
     private fun sendSet(){
         val command = color
-/*        val color_json = JSONObject()
-        color_json.put("val", color)
-        val obj = JSONObject()
-        obj.put("Constant", color_json)
- */
+
         VollyController.get().add(
             JsonObjectRequest(
                 Request.Method.PUT,
